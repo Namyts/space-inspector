@@ -5,6 +5,8 @@ const path = require("path");
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
 
+require("./app")
+
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
@@ -23,13 +25,14 @@ if (require("electron-squirrel-startup")) {
 	app.quit();
 }
 
-function createWindow() {
+const createWindow = () => {
 	// Create the browser window.
 	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1400,
+		height: 1000,
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			preload: __dirname + '/preload.js'
 		}
 	});
 
@@ -43,7 +46,7 @@ function createWindow() {
 
 	// Open the DevTools.
 	if (isDev) {
-		win.webContents.openDevTools();
+		win.webContents.openDevTools({mode: 'bottom'});
 	}
 }
 

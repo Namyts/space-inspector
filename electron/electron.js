@@ -3,6 +3,9 @@
 const path = require("path");
 
 const { app, BrowserWindow } = require("electron");
+
+let win; 
+
 const isDev = require("electron-is-dev");
 
 require("./app")
@@ -27,7 +30,7 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
 	// Create the browser window.
-	const win = new BrowserWindow({
+	win = new BrowserWindow({
 		width: 1400,
 		height: 1000,
 		webPreferences: {

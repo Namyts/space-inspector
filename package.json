@@ -2,7 +2,7 @@
 	"name": "spaceinspector-electron",
 	"version": "0.1.0",
 	"private": true,
-	"main": "public/electron/electron.js",
+	"main": "electron/electron.js",
 	"homepage": "./",
 	"dependencies": {
 		"electron-is-dev": "^2.0.0",
@@ -14,7 +14,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"dev": "concurrently -k \"SET BROWSER=none && npm start\" \"npm run electron\"",
-		"electron": "wait-on tcp:3000 && electron-forge start --inspect-electron 9229",
+		"electron": "wait-on tcp:3000 && nodemon --watch electron --exec electron-forge start --inspect-electron 9229",
 		"build": "react-scripts build",
 		"package": "npm run build && electron-forge package",
 		"make": "npm run build && electron-forge make"

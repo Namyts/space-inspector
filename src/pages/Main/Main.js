@@ -2,14 +2,16 @@ import useEnter from 'functions/useEnter';
 import { useState, useEffect } from 'react';
 import classes from './Main.module.css';
 
+const { ipcRenderer } = window.require('electron')
+
 const App = () => {
 	const [rootString, setRootString] = useState('')
 
 	useEnter(()=>{
 		console.log(`Submitted: ${rootString}`)
 
-
-		window.ipcRenderer.invoke('example-action', {text: rootString})
+		console.log('test')
+		ipcRenderer.invoke('example', {text: rootString})
 
 	},[rootString])
 

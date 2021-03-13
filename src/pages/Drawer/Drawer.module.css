@@ -1,0 +1,14 @@
+.page{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.drawer {
+	display: flex;
+	height: 80vh;
+	border: 1px;
+	border-color: red;
+	border-style: solid;
+	width: 90vw;
+}

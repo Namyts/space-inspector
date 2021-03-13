@@ -7,4 +7,12 @@ ipcMain.handle('example', (e, action) => {
 
 console.log('ipcMain is ready')
 
-//you can use this to calculate things in the background
+/*
+	you can use this to do things in the background
+	in the react code, try: 
+
+	const { ipcRenderer } = window.require('electron')
+	ipcRenderer.invoke('example', {data: 'rootString'})
+*/
+
+

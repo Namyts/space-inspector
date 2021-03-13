@@ -5,10 +5,13 @@
 	"main": "electron/electron.js",
 	"homepage": "./",
 	"dependencies": {
+		"d3": "^6.6.0",
 		"electron-is-dev": "^2.0.0",
 		"electron-squirrel-startup": "^1.0.0",
+		"querystring": "^0.2.1",
 		"react": "^17.0.1",
 		"react-dom": "^17.0.1",
+		"react-router-dom": "^5.2.0",
 		"react-scripts": "4.0.3"
 	},
 	"scripts": {

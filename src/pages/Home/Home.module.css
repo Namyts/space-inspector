@@ -1,4 +1,4 @@
-.App {
+.page {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -7,4 +7,18 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.welcome {
+	font-size: 1em;
+}
+
+.instructions {
+	font-size: 0.5em;
+}
+
+.root-input {
+	margin-top: 3vh;
+	padding-top: 1vh;
+	border-radius: 10px;
 }

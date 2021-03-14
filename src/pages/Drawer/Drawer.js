@@ -17,7 +17,7 @@ const Drawer = (props) => {
 
 	const svgSize = getSize()
 	
-	const root = url.location.search.root
+	const root = url.location.search.root || './src'
 	if(!root){url.push('/')}
 
 	const [data, setData] = useState(null)
@@ -26,7 +26,7 @@ const Drawer = (props) => {
 	useEffect(()=>{
 		if(!locked){
 			console.log(`INSPECTING FS`)
-			inspectFileSystem('./src')
+			inspectFileSystem(root)
 			setLocked(true)
 		}
 		

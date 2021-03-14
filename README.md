@@ -1,3 +1,21 @@
+# Space inspector
+
+### To install: 
+
+```
+git clone https://github.com/Namyts/space-inspector.git
+
+cd space-inspector
+
+npm install
+
+npm run dev
+```
+
+<br/>
+
+### To use:
+
 Enter the root path you want to analyse and press Enter.
 
 It will produce a graphic similar to spacesniffer.

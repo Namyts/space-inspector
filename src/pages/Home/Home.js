@@ -7,11 +7,9 @@ const Home = () => {
 	const url = useUrl()
 	const [rootString, setRootString] = useState('')
 
-	useEffect(()=>console.log(`Reloading! ${new Date().toTimeString()}`),[])
-
 	useEnter(()=>{
 		console.log(`Submitted: ${rootString}`)
-		url.push('drawer',rootString)
+		url.push('drawer',{root: rootString})
 	},[rootString])
 
 	return (

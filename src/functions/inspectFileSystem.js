@@ -32,7 +32,7 @@ const inspectFileSystem = (dir,par=null) => {
 	files.push(directory)
 	fs.readdir(p).then(contents=>{
 		contents.forEach(item => {
-			const itemPath = `${p}/${item}`
+			const itemPath = path.resolve(p,item)
 			fs.stat(itemPath).then(stat=>{
 				directory.addChild(itemPath)
 				const isDir = stat.isDirectory()
@@ -52,6 +52,5 @@ const inspectFileSystem = (dir,par=null) => {
 			})
 		});
 	})
-	console.log(files)
 }
 export default inspectFileSystem

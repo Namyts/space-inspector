@@ -1,54 +1,89 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import inspectFileSystem, {getFiles} from 'functions/inspectFileSystem'
 
 import classes from './Drawer.module.css'
 import useUrl from 'functions/useUrl'
 
 import * as d3 from 'd3'
+import useDimensions from 'functions/useDimensions'
+import drawSVG from './drawSVG'
+
 
 const Drawer = (props) => {
 	const url = useUrl()
-	const drawingRef = useRef(null)
 	
-	const [locked, setLocked] = useState(false)
+	const svgRef = useRef()
+	const [drawerRef, getSize] = useDimensions()
 
-	const root = url.location.search
+	const svgSize = getSize()
+	
+	const root = url.location.search.root
 	if(!root){url.push('/')}
 
-	useEffect(()=>{
-		if(root && !locked){
-			setLocked(true)
-			inspectFileSystem('./src')
-		}
-	},[root])
+	const [data, setData] = useState(null)
 
-	const [files, setFiles] = useState([])
+	const [locked, setLocked] = useState(false)
+	useEffect(()=>{
+		if(!locked){
+			console.log(`INSPECTING FS`)
+			inspectFileSystem('./src')
+			setLocked(true)
+		}
+		
+	},[])
 
 	const onUpdateFiles = () => {
-		const newFiles = getFiles()
-		setFiles(newFiles)
+		setData(transformFileData(getFiles()))
 	}
 
-	console.log(drawingRef)
+	useEffect(()=>{
+		if(!svgRef.current || !data){return}
+		console.log(svgSize)
+		console.log(svgRef.current)
+		console.log(drawerRef.current)
+		console.log('time to draw')
+		drawSVG(d3.select(svgRef.current), data, {
+			width: svgSize.width,
+			height: svgSize.height
+		})
+	},[data, JSON.stringify(svgSize)])
 
-	useLayoutEffect(()=>{
 
-	},[files])
-
-
-	if(locked) {
-		return (
-			<div className={classes['page']}>
-				<button onClick={onUpdateFiles}>Click to update drawing</button>
-				<div className={classes['drawer']}>
-					<div ref={drawingRef}/>
-				</div>
+	return (
+		<div className={classes['page']}>
+			<button onClick={onUpdateFiles}>Click to update drawing</button>
+			<div className={classes['drawer']} ref={drawerRef}>
+				<svg style={{position: 'absolute', height: "100%", width: "100%"}} ref={svgRef}/>
 			</div>
-			
-		)
-	} else {
-		return null
-	}
+		</div>
+	)
+
 }
 
 export default Drawer
+
+const transformFileData = (data) => {
+	console.log(data)
+	const root = data.find(d=>!d.parent)
+
+	const getChildren = (p) => {
+		const self = data.find(d=>d.path==p)
+		if(!self) {return}
+		if(self.type==='file'){
+			return {
+				name: self.name,
+				value: self.size
+			}
+		} else {
+			return {
+				name: self.name,
+				children: self.contains.map(c=>getChildren(c))
+			}
+		}
+		
+	}
+
+	const results = getChildren(root.path)
+	console.log(results)
+	return results
+}

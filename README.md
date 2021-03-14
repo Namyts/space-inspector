@@ -1,5 +1,7 @@
 # Space inspector
 
+A bad version of spacesniffer, as an electron app.
+
 ### To install: 
 
 ```
